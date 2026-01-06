@@ -1,13 +1,25 @@
+-- LocalScript para cargar animación de KJ
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
--- Ejecuta cuando tu personaje aparezca
+-- Función para ejecutar el módulo de tu jugador
+local function loadModule()
+    local success, err = pcall(function()
+        require(18808399962).load(player.Name)
+    end)
+    if not success then
+        warn("[LocalScript] Error al ejecutar el módulo: "..tostring(err))
+    end
+end
+
+-- Ejecutar cuando el personaje aparezca
 player.CharacterAdded:Connect(function(char)
-    -- Esto llama al módulo externo para tu personaje
-    require(18808399962).load(player.Name)
+    loadModule()
 end)
 
--- Si el personaje ya está cargado al ejecutar el script
+-- Ejecutar si el personaje ya estaba cargado al correr el script
 if player.Character then
-    require(18808399962).load(player.Name)
+    loadModule()
 end
+
+print("[LocalScript] Módulo preparado para el jugador "..player.Name)
